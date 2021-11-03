@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BotController : MonoBehaviour
 {
+    Animator animator; 
     public float speed = 0.5f;
     public float changeTime = 1.0f;
     int direction = 1;
@@ -15,6 +16,7 @@ public class BotController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         timer = changeTime;
         directionTimer = changeTime * 2; 
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -27,10 +29,14 @@ public class BotController : MonoBehaviour
         if (vertical)
         {
             position.y = position.y + Time.deltaTime * speed * direction;
+            animator.SetFloat("Move X", 0);
+            animator.SetFloat("Move Y", direction);
         }
         else
         {
             position.x = position.x + Time.deltaTime * speed * direction;
+            animator.SetFloat("Move X", direction);
+            animator.SetFloat("Move Y", 0);
         }
         rigidbody2D.MovePosition(position);
     }

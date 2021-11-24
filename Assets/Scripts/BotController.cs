@@ -11,7 +11,8 @@ public class BotController : MonoBehaviour
     float timer;
     public bool vertical;
     Rigidbody2D rigidbody2D;
-    float directionTimer; 
+    float directionTimer;
+    bool broken = true;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,11 @@ public class BotController : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {
+    {   
+        if (!broken)
+        {
+            return;
+        }
         Vector2 position = rigidbody2D.position;
         if (vertical)
         {
@@ -42,6 +47,10 @@ public class BotController : MonoBehaviour
     }
     void Update()
     {
+        if (!broken)
+        {
+            return;
+        }
         timer -= Time.deltaTime;
         if (timer < 0)
         {
@@ -55,6 +64,13 @@ public class BotController : MonoBehaviour
             direction = -direction;
             directionTimer = changeTime * 2;
         }
+    }
+
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2D.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 
     void OnCollisionEnter2D(Collision2D other)

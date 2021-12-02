@@ -13,6 +13,7 @@ public class BotController : MonoBehaviour
     Rigidbody2D rigidbody2D;
     float directionTimer;
     bool broken = true;
+    public ParticleSystem smokeEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +72,7 @@ public class BotController : MonoBehaviour
         broken = false;
         rigidbody2D.simulated = false;
         animator.SetTrigger("Fixed");
+        smokeEffect.Stop();
     }
 
     void OnCollisionEnter2D(Collision2D other)
